@@ -1,0 +1,73 @@
+/* Reset Universal: ESTO ES CLAVE para que el padding no rompa el ancho */
+/* Hace que el padding y border se incluyan DENTRO del ancho y alto especificados */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* Evita scroll horizontal indeseado causado por elementos que se salen */
+  overflow-x: hidden; 
+}
+
+#root {
+  height: 100%;
+}
+
+/* Contenedor Principal (Flex Column) */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  max-width: 100vw; /* Asegura que no exceda el viewport */
+}
+
+/* Envoltorio del Contenido */
+.content-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para enlaces globales (opcional) */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Utilidad para botones */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+}
+
+/* Animación suave de entrada para las páginas */
+.content-wrap > div {
+  animation: fadeIn 0.3s ease-in-out;
+  width: 100%; /* Asegura que las páginas ocupen todo el ancho disponible */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
