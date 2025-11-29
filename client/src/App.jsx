@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 // Páginas Públicas
 import LandingPage from './pages/LandingPage';
+import CareerDetails from './pages/CareerDetails'; // IMPORTAR PÁGINA DE DETALLE
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Unauthorized from './pages/Unauthorized';
@@ -25,9 +26,13 @@ function App() {
       <Navbar />
       <div className="content-wrap">
         <Routes>
-          {/* 1. Ruta Raíz: Muestra la Landing Page al entrar */}
+          {/* Ruta Raíz: Landing Page */}
           <Route path="/" element={<LandingPage />} />
           
+          {/* Ruta Dinámica para Detalle de Carreras */}
+          {/* :id captura 'software', 'rrhh', etc. */}
+          <Route path="/career/:id" element={<CareerDetails />} />
+
           {/* Rutas Públicas */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -46,7 +51,7 @@ function App() {
             <Route path="/student/enroll" element={<Enrollments />} />
           </Route>
 
-          {/* Fallback: Cualquier ruta desconocida redirige a la Landing ("/") */}
+          {/* Fallback para rutas no existentes */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

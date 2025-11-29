@@ -5,50 +5,45 @@ import styles from './Navbar.module.css';
 const Navbar = () => {
   const { user, logoutUser } = useAuth();
   const location = useLocation();
-
-  // Si estamos en login/register, a veces es mejor ocultar la navbar, 
-  // pero aquí la dejaremos visible para facilitar la navegación.
   const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.container}>
-        {/* Logo siempre visible */}
         <Link to="/" className={styles.logo}>
           UniSystem
         </Link>
 
-        {/* Menú Dinámico */}
         <ul className={styles.links}>
           {user ? (
-            // --- USUARIO LOGUEADO ---
+            // --- LOGGED USER ---
             <>
               {user.role === 'ADMIN' && (
                 <>
                   <li><Link to="/admin">Dashboard</Link></li>
-                  <li><Link to="/admin/courses">Materias</Link></li>
-                  <li><Link to="/admin/students">Alumnos</Link></li>
+                  <li><Link to="/admin/courses">Courses</Link></li>
+                  <li><Link to="/admin/students">Students</Link></li>
                 </>
               )}
               {user.role === 'STUDENT' && (
                 <>
-                  <li><Link to="/student">Mis Notas</Link></li>
-                  <li><Link to="/student/enroll">Inscripción</Link></li>
+                  <li><Link to="/student">My Grades</Link></li>
+                  <li><Link to="/student/enroll">Enrollment</Link></li>
                 </>
               )}
               <li>
-                <button onClick={logoutUser} className={styles.logoutBtn}>Salir</button>
+                <button onClick={logoutUser} className={styles.logoutBtn}>Logout</button>
               </li>
             </>
           ) : (
-            // --- USUARIO PÚBLICO (No logueado) ---
+            // --- PUBLIC USER ---
             !isAuthPage && (
               <>
-                <li><a href="#carreras" className={styles.navLink}>Carreras</a></li>
-                <li><a href="#contacto" className={styles.navLink}>Contacto</a></li>
+                <li><a href="#careers" className={styles.navLink}>Careers</a></li>
+                <li><a href="#contact" className={styles.navLink}>Contact</a></li>
                 <li>
                   <Link to="/login" className={styles.loginLink}>
-                    Ingresar
+                    Login
                   </Link>
                 </li>
               </>
