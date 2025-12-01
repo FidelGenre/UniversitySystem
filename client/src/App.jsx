@@ -4,15 +4,15 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 // Páginas Públicas
 import LandingPage from './pages/LandingPage';
-import CareerDetails from './pages/CareerDetails'; // IMPORTAR PÁGINA DE DETALLE
+import CareerDetails from './pages/CareerDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Unauthorized from './pages/Unauthorized';
 
 // Páginas Admin
 import AdminDashboard from './pages/admin/AdminDashboard';
-import ManageCourses from './pages/admin/ManageCourses';
-import ManageStudents from './pages/admin/ManageStudents';
+// NOTA: Ya no necesitamos importar ManageCourses/ManageStudents aquí 
+// porque los maneja AdminDashboard internamente.
 
 // Páginas Student
 import StudentHome from './pages/student/StudentHome';
@@ -26,11 +26,8 @@ function App() {
       <Navbar />
       <div className="content-wrap">
         <Routes>
-          {/* Ruta Raíz: Landing Page */}
+          {/* Ruta Raíz */}
           <Route path="/" element={<LandingPage />} />
-          
-          {/* Ruta Dinámica para Detalle de Carreras */}
-          {/* :id captura 'software', 'rrhh', etc. */}
           <Route path="/career/:id" element={<CareerDetails />} />
 
           {/* Rutas Públicas */}
@@ -40,9 +37,8 @@ function App() {
 
           {/* Rutas Protegidas - ADMIN */}
           <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/courses" element={<ManageCourses />} />
-            <Route path="/admin/students" element={<ManageStudents />} />
+            {/* CAMBIO CLAVE: Usamos '/*' para que AdminDashboard maneje sub-rutas */}
+            <Route path="/admin/*" element={<AdminDashboard />} />
           </Route>
 
           {/* Rutas Protegidas - STUDENT */}
@@ -51,7 +47,7 @@ function App() {
             <Route path="/student/enroll" element={<Enrollments />} />
           </Route>
 
-          {/* Fallback para rutas no existentes */}
+          {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

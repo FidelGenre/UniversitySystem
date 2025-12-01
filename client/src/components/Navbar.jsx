@@ -16,30 +16,23 @@ const Navbar = () => {
 
         <ul className={styles.links}>
           {user ? (
-            // --- LOGGED USER ---
+            // --- USUARIO LOGUEADO ---
+            // Solo mostramos "Dashboard" y "Logout" para mantenerlo limpio
             <>
-              {user.role === 'ADMIN' && (
-                <>
-                  <li><Link to="/admin">Dashboard</Link></li>
-                  <li><Link to="/admin/courses">Courses</Link></li>
-                  <li><Link to="/admin/students">Students</Link></li>
-                </>
-              )}
-              {user.role === 'STUDENT' && (
-                <>
-                  <li><Link to="/student">My Grades</Link></li>
-                  <li><Link to="/student/enroll">Enrollment</Link></li>
-                </>
-              )}
+              <li>
+                <Link to={user.role === 'ADMIN' ? '/admin' : '/student'}>
+                  Dashboard
+                </Link>
+              </li>
               <li>
                 <button onClick={logoutUser} className={styles.logoutBtn}>Logout</button>
               </li>
             </>
           ) : (
-            // --- PUBLIC USER ---
+            // --- USUARIO PÚBLICO ---
             !isAuthPage && (
               <>
-                <li><a href="#careers" className={styles.navLink}>Careers</a></li>
+                <li><a href="#careers" className={styles.navLink}>Programs</a></li>
                 <li><a href="#contact" className={styles.navLink}>Contact</a></li>
                 <li>
                   <Link to="/login" className={styles.loginLink}>
