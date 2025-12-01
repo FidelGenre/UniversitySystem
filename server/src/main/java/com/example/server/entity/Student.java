@@ -14,6 +14,9 @@ public class Student {
     @Column(unique = true)
     private String studentId; // Legajo o Matrícula única del estudiante
 
+    private String phone;
+    private String profilePictureUrl;
+
     private String firstName;
     private String lastName;
     private String email;

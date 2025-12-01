@@ -11,6 +11,12 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher; // Asignar un profe a la materia
+
+    private String syllabusUrl; // Link al PDF del programa
+
     private String name;
 
     // length = 500 permite descripciones más largas que el estándar de 255

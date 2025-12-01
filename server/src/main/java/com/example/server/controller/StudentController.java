@@ -19,42 +19,42 @@ public class StudentController {
 
     @Autowired
     EnrollmentRepository enrollmentRepository;
+
     @Autowired
     CourseRepository courseRepository;
+
+    // CAMBIO CLAVE: Agregamos el repositorio de Estudiantes
     @Autowired
-    StudentRepository studentRepository; // Necesario para buscar el perfil del alumno
+    StudentRepository studentRepository;
 
     // Ver mis inscripciones y notas
     @GetMapping("/my-grades")
     public List<Enrollment> getMyGrades() {
-        // MOCK: Usamos el ID de Usuario (User ID) simulando el login
         Long mockUserId = 1L;
 
-        // 1. Buscamos el Estudiante asociado a este Usuario
+        // CORRECCIÓN: Buscamos el objeto STUDENT usando el ID de usuario
         Student student = studentRepository.findByUserId(mockUserId)
                 .orElseThrow(
                         () -> new RuntimeException("Perfil de estudiante no encontrado para el usuario " + mockUserId));
 
-        // 2. Buscamos las inscripciones usando el ID del Estudiante (no el del User)
         return enrollmentRepository.findByStudentId(student.getId());
     }
 
     // Inscribirse a una materia
     @PostMapping("/enroll/{courseId}")
     public Enrollment enrollCourse(@PathVariable Long courseId) {
-        // MOCK User ID
         Long mockUserId = 1L;
 
-        // 1. Corregido: Buscamos el objeto STUDENT, no el USER
+        // CORRECCIÓN: Ahora 'student' es de tipo Student, no User.
+        // Esto soluciona el error "incompatible types".
         Student student = studentRepository.findByUserId(mockUserId)
-                .orElseThrow(() -> new RuntimeException(
-                        "Perfil de estudiante no encontrado. ¿Ya creaste el perfil de alumno?"));
+                .orElseThrow(() -> new RuntimeException("Perfil de estudiante no encontrado."));
 
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
         Enrollment enrollment = new Enrollment();
-        enrollment.setStudent(student); // Ahora sí: pasamos un objeto Student
+        enrollment.setStudent(student); // Ahora sí recibe un objeto Student
         enrollment.setCourse(course);
 
         return enrollmentRepository.save(enrollment);
