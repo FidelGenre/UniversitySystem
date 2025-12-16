@@ -13,10 +13,14 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Aplica a todas las rutas
-                        .allowedOrigins("http://localhost:5173") // Permite solo a tu Frontend
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Verbos permitidos
-                        .allowedHeaders("*") // Permite todos los headers (necesario para el Token)
+                registry.addMapping("/**")
+                        // En producción, reemplaza "*" por la URL real de tu Frontend (ej:
+                        // https://unisystem.onrender.com)
+                        // Para pruebas rápidas, "allowedOriginPatterns" con "*" permite todo (menos
+                        // seguro, pero funciona)
+                        .allowedOriginPatterns("*")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
                         .allowCredentials(true);
             }
         };
